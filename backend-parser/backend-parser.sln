@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "api", "api\api.fsproj", "{87C59E61-94FA-4D9A-A726-8589BA34F358}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "library", "library\library.fsproj", "{6AC2DD0D-C7A3-4BFE-926F-59A3002A2A71}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "tests", "tests\tests.fsproj", "{70C000E4-808B-4DFE-A0BD-6F493E3CC0BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{87C59E61-94FA-4D9A-A726-8589BA34F358}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87C59E61-94FA-4D9A-A726-8589BA34F358}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87C59E61-94FA-4D9A-A726-8589BA34F358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AC2DD0D-C7A3-4BFE-926F-59A3002A2A71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC2DD0D-C7A3-4BFE-926F-59A3002A2A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC2DD0D-C7A3-4BFE-926F-59A3002A2A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC2DD0D-C7A3-4BFE-926F-59A3002A2A71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C000E4-808B-4DFE-A0BD-6F493E3CC0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C000E4-808B-4DFE-A0BD-6F493E3CC0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C000E4-808B-4DFE-A0BD-6F493E3CC0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C000E4-808B-4DFE-A0BD-6F493E3CC0BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

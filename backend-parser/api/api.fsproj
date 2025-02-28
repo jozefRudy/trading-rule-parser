@@ -2,10 +2,15 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
+        <WarningsAsErrors>FS0025</WarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
         <Compile Include="Program.fs"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\library\library.fsproj" />
     </ItemGroup>
 
 </Project>
