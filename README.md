@@ -1,4 +1,4 @@
-Code parser example used by [cryptoquant](https://cryptoquant.com) in v1.
+Code parser example used by [cryptoquant](https://cryptoquant.dev) in v1.
 
 It consists of angular frontend app with codemirror6 code editor with live typescript intellisense served on frontend.
 Trading DSL is a subset of typescript. Only valid typescript after validating on frontend is sent to backend.
