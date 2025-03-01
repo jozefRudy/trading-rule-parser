@@ -54,7 +54,6 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { BacktestService } from '../../services/backtest.service';
 import { equals } from 'ramda';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { keymap } from '@codemirror/view';
 
 @Component({
