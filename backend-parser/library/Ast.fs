@@ -61,7 +61,6 @@ let ternaryParamOp p i1 i2 i3 f = ThreeParamOp(p, i1, i2, i3, f)
 
 let arithmeticOp l op r = ArithmeticOp(l, op, r)
 
-
 type Comparison =
     | LT
     | GT
@@ -90,22 +89,13 @@ type StringUniverse =
 
     member this.Value = let (StringUniverse tickers) = this in tickers
 
-
 type StrategyName = string
 
 type Period = DateOnly
 
-type Status =
-    | NotStarted
-    | InProgress
-    | Finished
-    | Stopped
-
-
 type Mode =
     | Backtest
     | Live
-
 
 type Declaration =
     | Logical of name: string * Logical
