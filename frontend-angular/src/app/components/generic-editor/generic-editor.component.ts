@@ -80,8 +80,6 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
   code = input.required<string>();
   code$ = toObservable(this.code);
 
-  readOnly = input.required<boolean>();
-
   private container = viewChild.required<ElementRef>('editorContainer');
   private env: VirtualTypeScriptEnvironment | null = null;
   private editor: EditorView | null = null;
@@ -96,7 +94,6 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
   constructor(
     private tsService: TypeScriptService,
     private service: BacktestService,
-    private snackBar: MatSnackBar,
     private destroyRef: DestroyRef,
   ) {}
 
@@ -109,12 +106,6 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
     this.code$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((x) => this.updateCode(x));
-
-    if (this.readOnly()) {
-      this.createEditor(null, this.code());
-      this.ready$.emit(true);
-      return;
-    }
 
     fromPromise(this.tsService.getVirtualTypeScriptEnvironment()).subscribe(
       (env) => {
@@ -143,9 +134,7 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
         switchMap(([x]) =>
           this.service.parse(x).pipe(
             tap((_) => this.clearErrors()),
-
             catchEditorError(this),
-            //catchSnackBarError(this.snackBar),
           ),
         ),
       )
