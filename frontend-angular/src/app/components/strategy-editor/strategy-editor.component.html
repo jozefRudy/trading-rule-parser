@@ -1,0 +1,33 @@
+<style>
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  .success {
+    color: green;
+    font-weight: bold;
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+
+<h2>Strategy editor</h2>
+<app-generic-editor
+  (ready$)="handleReady($event)"
+  (errors$)="handleErrors($event)"
+  [code]="code"
+  [readOnly]="false"
+/>
+
+@if (errors()) {
+  <p class="error">Errors in strategy</p>
+} @else {
+  <p class="success">No errors in strategy</p>
+}

@@ -390,7 +390,7 @@ module Backtest =
                     )
 
         }
-        
+
 module ParserResult =
     type ParserError =
         { Message: string
@@ -410,3 +410,6 @@ module ParserResult =
         match result with
         | ParserResult.Success(x, _, _) -> Result.Ok x
         | ParserResult.Failure(_, error, _) -> Result.Error(convertParserError error)
+
+module Errors =
+    type ApiError = ParserError of ParserResult.ParserError

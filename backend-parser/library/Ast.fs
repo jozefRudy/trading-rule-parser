@@ -124,6 +124,4 @@ type Backtest =
       Universe: StringUniverse
       Name: StrategyName }
 
-type Request = { Content: string }
-
 type Content = { Content: string }
