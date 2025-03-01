@@ -166,13 +166,13 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
       tsFacet.of({ env: env, path: '/index.ts' }),
       tsSync(),
       this.lintCompartment.of(this.linterExtensions()),
-      this.createUpdateListenerExtension(env),
+      this.createEditorChangeListener(env),
       readOnlyRangesExtension(readOnlyTwoTopLines),
       customStyledLines([1, 2]),
     ];
   }
 
-  private createUpdateListenerExtension(env: VirtualTypeScriptEnvironment) {
+  private createEditorChangeListener(env: VirtualTypeScriptEnvironment) {
     return EditorView.updateListener.of((update) => {
       const reconfigured =
         update.transactions.filter((x) => x.reconfigured).length > 0;

@@ -1,5 +1,4 @@
 import { VirtualTypeScriptEnvironment } from '@typescript/vfs';
-import { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
 import { EditorView } from 'codemirror';
 import { EditorState } from '@codemirror/state';
 import {
@@ -147,15 +146,12 @@ export function renderTooltip(info: HoverInfo) {
     innerDiv.className = 'cm-hover-signature';
   }
 
-  const desc = getTag(info, 'description');
-  if (desc) {
-    div.appendChild(desc);
-  }
-
-  const example = getTag(info, 'example');
-  if (example) {
-    div.appendChild(example);
-  }
+  ['description', 'example'].forEach((tag) => {
+    const element = getTag(info, tag);
+    if (element) {
+      div.appendChild(element);
+    }
+  });
 
   return { dom: div };
 }
