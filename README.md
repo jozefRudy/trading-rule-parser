@@ -19,5 +19,4 @@ dotnet run
 ```
 
 For development I recommend opening both projects in the same editor, jetbrains rider works really well for this.
-
-<img width="1208" alt="Screenshot 2025-03-01 at 20 12 14" src="https://github.com/user-attachments/assets/0bb3af27-3628-41a7-a9dc-7788ee3ee8ac" />
+<img width="1206" alt="Screenshot 2025-03-01 at 20 13 45" src="https://github.com/user-attachments/assets/49a39717-7cdb-4fa1-8dca-c53b5d85ee39" />
