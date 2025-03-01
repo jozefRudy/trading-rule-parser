@@ -1,43 +1,15 @@
-import { VirtualTypeScriptEnvironment } from "@typescript/vfs";
-import { CompletionContext, CompletionResult } from "@codemirror/autocomplete";
-import { EditorView } from "codemirror";
-import { EditorState } from "@codemirror/state";
+import { VirtualTypeScriptEnvironment } from '@typescript/vfs';
+import { CompletionContext, CompletionResult } from '@codemirror/autocomplete';
+import { EditorView } from 'codemirror';
+import { EditorState } from '@codemirror/state';
 import {
   Decoration,
   DecorationSet,
   ViewPlugin,
   ViewUpdate,
-} from "@codemirror/view";
-import { RangeSetBuilder } from "@codemirror/state";
-import { HoverInfo } from "@valtown/codemirror-ts";
-
-export function templateAutocomplete(
-  context: CompletionContext,
-): CompletionResult | null {
-  let word = context.matchBefore(/\w+\s?\w*/);
-
-  if (!word || (word.from === word.to && !context.explicit)) {
-    return null;
-  }
-
-  return {
-    from: word ? word.from : context.pos,
-    options: [
-      {
-        label: "template rsi",
-        type: "keyword",
-        apply: "main.constant(30) < main.priceDay().rsi(14)",
-        detail: "RSI(14)",
-      },
-      {
-        label: "template sma",
-        type: "keyword",
-        detail: "SMA(200)",
-        apply: "main.priceDay() > main.priceDay().moving_average(200)",
-      },
-    ],
-  };
-}
+} from '@codemirror/view';
+import { RangeSetBuilder } from '@codemirror/state';
+import { HoverInfo } from '@valtown/codemirror-ts';
 
 export function createOrUpdateFile(
   env: VirtualTypeScriptEnvironment,
@@ -67,45 +39,45 @@ export function customStyledLines(lines: number[]) {
 }
 
 export const baseTheme = EditorView.baseTheme({
-  ".cm-content": {
-    fontSize: "11.5pt",
+  '.cm-content': {
+    fontSize: '11.5pt',
   },
-  ".cm-gutters": {
-    fontSize: "11.5pt",
+  '.cm-gutters': {
+    fontSize: '11.5pt',
   },
-  ".cm-grayBackground": { backgroundColor: "#e5e7eb" },
+  '.cm-grayBackground': { backgroundColor: '#e5e7eb' },
 
-  ".cm-hover-tooltip": {
-    margin: "2px",
+  '.cm-hover-tooltip': {
+    margin: '2px',
   },
-  ".cm-hover-signature:not(:last-child)": {
-    marginBottom: "4px",
-    paddingBottom: "4px",
-    borderBottom: "1px solid #e0e0e0",
+  '.cm-hover-signature:not(:last-child)': {
+    marginBottom: '4px',
+    paddingBottom: '4px',
+    borderBottom: '1px solid #e0e0e0',
   },
-  ".cm-hover-signature .cm-quick-info-methodName": {
-    color: "#0000FF",
-    fontWeight: "bold",
+  '.cm-hover-signature .cm-quick-info-methodName': {
+    color: '#0000FF',
+    fontWeight: 'bold',
   },
-  ".cm-hover-signature .cm-quick-info-text": {},
-  ".cm-hover-signature .cm-quick-info-parameterName": {
-    color: "#008000",
+  '.cm-hover-signature .cm-quick-info-text': {},
+  '.cm-hover-signature .cm-quick-info-parameterName': {
+    color: '#008000',
   },
-  ".cm-hover-signature .cm-quick-info-keyword": {
-    color: "#0000FF",
+  '.cm-hover-signature .cm-quick-info-keyword': {
+    color: '#0000FF',
   },
-  ".cm-hover-tag": {
-    color: "#666666",
+  '.cm-hover-tag': {
+    color: '#666666',
   },
-  ".cm-hover-tag:not(:last-child)": {
-    marginBottom: "4px",
-    paddingBottom: "4px",
-    borderBottom: "1px solid #e0e0e0",
+  '.cm-hover-tag:not(:last-child)': {
+    marginBottom: '4px',
+    paddingBottom: '4px',
+    borderBottom: '1px solid #e0e0e0',
   },
 });
 
 const lineDecoration = Decoration.line({
-  attributes: { class: "cm-grayBackground" },
+  attributes: { class: 'cm-grayBackground' },
 });
 
 function decorateLines(view: EditorView, lines: number[]) {
@@ -146,14 +118,14 @@ function styleLines(lines: number[]) {
 function getTag(info: HoverInfo, name: string) {
   const descriptionTag = info.quickInfo?.tags?.find((tag) => tag.name === name);
   if (descriptionTag?.text) {
-    const div = document.createElement("div");
+    const div = document.createElement('div');
     div.innerHTML =
       `<strong>@${name}</strong><br>` +
       descriptionTag.text
         .map((t) => t.text)
-        .join("")
-        .replace(/\n/g, "<br>")
-        .replace(/- /g, "• ");
+        .join('')
+        .replace(/\n/g, '<br>')
+        .replace(/- /g, '• ');
 
     div.className = `cm-hover-tag`;
     return div;
@@ -162,25 +134,25 @@ function getTag(info: HoverInfo, name: string) {
 }
 
 export function renderTooltip(info: HoverInfo) {
-  const div = document.createElement("div");
-  div.className = "cm-hover-tooltip";
+  const div = document.createElement('div');
+  div.className = 'cm-hover-tooltip';
 
   if (info.quickInfo?.displayParts) {
-    const innerDiv = div.appendChild(document.createElement("div"));
+    const innerDiv = div.appendChild(document.createElement('div'));
     for (const part of info.quickInfo.displayParts) {
-      const span = innerDiv.appendChild(document.createElement("span"));
+      const span = innerDiv.appendChild(document.createElement('span'));
       span.className = `cm-quick-info-${part.kind}`;
       span.innerText = part.text;
     }
-    innerDiv.className = "cm-hover-signature";
+    innerDiv.className = 'cm-hover-signature';
   }
 
-  const desc = getTag(info, "description");
+  const desc = getTag(info, 'description');
   if (desc) {
     div.appendChild(desc);
   }
 
-  const example = getTag(info, "example");
+  const example = getTag(info, 'example');
   if (example) {
     div.appendChild(example);
   }

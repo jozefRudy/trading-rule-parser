@@ -9,7 +9,6 @@ import {
 import { BacktestService } from '../../services/backtest.service';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { first, map } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenericEditorComponent } from '../generic-editor/generic-editor.component';
 import { helperMethods, universeModule, code } from '../../types/editor';
 
@@ -24,12 +23,11 @@ export class StrategyEditorComponent implements OnInit {
   private editor = viewChild.required(GenericEditorComponent);
   protected errors = signal(false);
   private ready = signal(false);
-  private _ready$ = toObservable(this.ready);
+  private ready$ = toObservable(this.ready);
   protected code = code;
 
   constructor(
     private service: BacktestService,
-    private snackBar: MatSnackBar,
     private destroyRef: DestroyRef,
   ) {}
 
@@ -42,7 +40,7 @@ export class StrategyEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._ready$
+    this.ready$
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         first((x) => x),

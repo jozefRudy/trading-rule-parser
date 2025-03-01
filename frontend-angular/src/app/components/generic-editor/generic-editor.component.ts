@@ -37,7 +37,6 @@ import {
   customStyledLines,
   readOnlyTwoTopLines,
   renderTooltip,
-  templateAutocomplete,
 } from '../../utility/codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import {
@@ -75,22 +74,23 @@ import { keymap } from '@codemirror/view';
   `,
 })
 export class GenericEditorComponent implements OnInit, OnDestroy {
-  diagnostics: Diagnostic[] = [];
-  lintCompartment = new Compartment();
-
   code = input.required<string>();
-  code$ = toObservable(this.code);
+  errors$ = output<boolean>();
+  ready$ = output<boolean>();
+
+  private code$ = toObservable(this.code);
+
+  private diagnostics: Diagnostic[] = [];
+  private lintCompartment = new Compartment();
 
   private container = viewChild.required<ElementRef>('editorContainer');
   private env: VirtualTypeScriptEnvironment | null = null;
   private editor: EditorView | null = null;
 
-  private _tsErrors$ = new BehaviorSubject(false);
-  private _staticErrors$ = new BehaviorSubject(false);
-  errors$ = output<boolean>();
+  private tsErrors$ = new BehaviorSubject(false);
+  private staticErrors$ = new BehaviorSubject(false);
 
-  private _content$ = new BehaviorSubject('');
-  ready$ = output<boolean>();
+  private content$ = new BehaviorSubject('');
 
   constructor(
     private tsService: TypeScriptService,
@@ -116,21 +116,21 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
       },
     );
 
-    combineLatest([this._tsErrors$, this._staticErrors$])
+    combineLatest([this.tsErrors$, this.staticErrors$])
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         map(([tsErrors, staticErrors]) => tsErrors || staticErrors),
       )
       .subscribe((x) => this.errors$.emit(x));
 
-    combineLatest([this._content$, this._tsErrors$])
+    combineLatest([this.content$, this.tsErrors$])
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         filter(([content, tsErrors]) => content.length > 0 && !tsErrors),
         distinctUntilChanged(([prevContent], [currContent]) => {
           return equals(prevContent, currContent);
         }),
-        tap(() => this._staticErrors$.next(true)),
+        tap(() => this.staticErrors$.next(true)),
         debounceTime(500),
         switchMap(([x]) =>
           this.service.parse(x).pipe(
@@ -160,7 +160,7 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
       tsLinter(),
       autocompletion({
         maxRenderedOptions: 50,
-        override: [tsAutocomplete(), templateAutocomplete],
+        override: [tsAutocomplete()],
       }),
       tsHover({ renderTooltip: renderTooltip }),
       tsFacet.of({ env: env, path: '/index.ts' }),
@@ -193,8 +193,8 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
         .getSemanticDiagnostics('/index.ts')
         .filter((x: any) => x.category === DiagnosticCategory.Error).length;
 
-      this._tsErrors$.next(syntactic + semantic > 0);
-      this._content$.next(this.getContent());
+      this.tsErrors$.next(syntactic + semantic > 0);
+      this.content$.next(this.getContent());
     });
   }
 
@@ -230,7 +230,7 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
   }
 
   clearErrors() {
-    this._staticErrors$.next(false);
+    this.staticErrors$.next(false);
     this.diagnostics.length = 0;
     this.lint();
   }
