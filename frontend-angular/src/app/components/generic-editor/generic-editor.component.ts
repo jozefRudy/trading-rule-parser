@@ -66,7 +66,9 @@ import { keymap } from '@codemirror/view';
       height: 100%;
 
       overflow: auto;
-      border-width: 2px;
+      border-width: 1px;
+      border-color: grey;
+      border-style: solid;
       margin-right: 2rem;
       margin-left: 2rem;
     }

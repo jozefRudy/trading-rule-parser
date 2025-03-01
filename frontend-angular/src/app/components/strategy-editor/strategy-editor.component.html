@@ -14,12 +14,12 @@
 
   p {
     text-align: center;
-    margin-top: 10px;
   }
 </style>
 
 <h2>Strategy editor</h2>
 <app-generic-editor
+  #editor
   (ready$)="handleReady($event)"
   (errors$)="handleErrors($event)"
   [code]="code"
