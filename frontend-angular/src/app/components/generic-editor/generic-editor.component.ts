@@ -60,18 +60,7 @@ import { keymap } from '@codemirror/view';
   imports: [],
   templateUrl: './generic-editor.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: `
-    #container {
-      height: 100%;
-
-      overflow: auto;
-      border-width: 1px;
-      border-color: grey;
-      border-style: solid;
-      margin-right: 2rem;
-      margin-left: 2rem;
-    }
-  `,
+  styles: ``,
 })
 export class GenericEditorComponent implements OnInit, OnDestroy {
   code = input.required<string>();
