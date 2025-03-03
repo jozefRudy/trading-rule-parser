@@ -214,10 +214,6 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
 
   addExtraLibTs(filename: string, lib: string) {
     if (this.env === null) {
-      this.snackBar.open('Server error', 'Dismiss', {
-        duration: 5000,
-      });
-
       throw new Error('editor not initialized');
     }
 
