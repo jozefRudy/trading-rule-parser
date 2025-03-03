@@ -26,7 +26,11 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { catchEditorError, ParserError } from '../../types/editor';
+import {
+  catchEditorError,
+  catchSnackbarError,
+  ParserError,
+} from '../../types/editor';
 import { TypeScriptService } from '../../services/typescript.service';
 import { fromPromise } from 'rxjs/internal/observable/innerFrom';
 import { Diagnostic, linter, lintGutter } from '@codemirror/lint';
@@ -54,6 +58,7 @@ import { BacktestService } from '../../services/backtest.service';
 import { equals } from 'ramda';
 
 import { keymap } from '@codemirror/view';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-generic-editor',
@@ -85,6 +90,7 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
     private tsService: TypeScriptService,
     private service: BacktestService,
     private destroyRef: DestroyRef,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnDestroy(): void {
@@ -125,6 +131,7 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
           this.service.parse(x).pipe(
             tap((_) => this.clearErrors()),
             catchEditorError(this),
+            catchSnackbarError(this.snackBar),
           ),
         ),
       )
@@ -207,6 +214,10 @@ export class GenericEditorComponent implements OnInit, OnDestroy {
 
   addExtraLibTs(filename: string, lib: string) {
     if (this.env === null) {
+      this.snackBar.open('Server error', 'Dismiss', {
+        duration: 5000,
+      });
+
       throw new Error('editor not initialized');
     }
 

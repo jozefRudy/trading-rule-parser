@@ -10,7 +10,13 @@ import { BacktestService } from '../../services/backtest.service';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { first, map } from 'rxjs';
 import { GenericEditorComponent } from '../generic-editor/generic-editor.component';
-import { helperMethods, universeModule, code } from '../../types/editor';
+import {
+  helperMethods,
+  universeModule,
+  code,
+  catchSnackbarError,
+} from '../../types/editor';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-strategy-editor',
@@ -29,6 +35,7 @@ export class StrategyEditorComponent implements OnInit {
   constructor(
     private service: BacktestService,
     private destroyRef: DestroyRef,
+    private snackBar: MatSnackBar,
   ) {}
 
   handleErrors(x: boolean) {
@@ -54,7 +61,10 @@ export class StrategyEditorComponent implements OnInit {
   addUniverseModule() {
     this.service
       .get_universe()
-      .pipe(map((x) => x.map((x) => x.ticker)))
+      .pipe(
+        map((x) => x.map((x) => x.ticker)),
+        catchSnackbarError(this.snackBar),
+      )
       .subscribe((u) => {
         this.editor().addExtraLibTs('/universe.ts', universeModule(u));
       });

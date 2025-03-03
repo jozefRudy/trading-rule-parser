@@ -14,7 +14,7 @@ pnpm start
 ```
 
 ```bash backend
-cd backend-parser
+cd backend-parser/api
 dotnet run
 ```
 

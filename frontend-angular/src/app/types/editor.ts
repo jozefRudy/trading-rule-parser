@@ -2,6 +2,7 @@ import { GenericEditorComponent } from '../components/generic-editor/generic-edi
 import { catchError, EMPTY, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { match, P } from 'ts-pattern';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export type ParserError = {
   message: string;
@@ -366,6 +367,19 @@ declare module "helper-methods" {
   }
 }
 `;
+
+export const catchSnackbarError = <T>(snackBar: MatSnackBar) => {
+  return (source: Observable<T>) =>
+    source.pipe(
+      catchError((e: HttpErrorResponse) => {
+        console.log(e);
+        snackBar.open('Server error', 'Dismiss', {
+          duration: 5000,
+        });
+        return EMPTY;
+      }),
+    );
+};
 
 export const catchEditorError = <T>(editor: GenericEditorComponent) => {
   return (source: Observable<T>) =>
